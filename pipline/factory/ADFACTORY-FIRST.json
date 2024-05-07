@@ -1,0 +1,9 @@
+{
+	"name": "ADFACTORY-FIRST",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "92496187-a780-4d39-906b-84454f99c7c4",
+		"tenantId": "dc82e185-94e5-464c-87f9-c686c12adb8c"
+	}
+}

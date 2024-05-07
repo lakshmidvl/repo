@@ -1,0 +1,105 @@
+{
+	"name": "pipeline6new",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Dataset_datalake",
+						"type": "DatasetReference",
+						"parameters": {
+							"continer": {
+								"value": "@pipeline().parameters.sourcecontainer",
+								"type": "Expression"
+							},
+							"dircctory": {
+								"value": "@pipeline().parameters.sourcedirectory",
+								"type": "Expression"
+							},
+							"filename": {
+								"value": "@pipeline().parameters.sourcefilename",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "dataset_sql",
+						"type": "DatasetReference",
+						"parameters": {
+							"Schema": {
+								"value": "@pipeline().parameters.sqlschema",
+								"type": "Expression"
+							},
+							"Tablename": {
+								"value": "@pipeline().parameters.sqltable",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"sourcecontainer": {
+				"type": "string"
+			},
+			"sourcedirectory": {
+				"type": "string"
+			},
+			"sourcefilename": {
+				"type": "string"
+			},
+			"sqlschema": {
+				"type": "string"
+			},
+			"sqltable": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-05-04T08:08:29Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

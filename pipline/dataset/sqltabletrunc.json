@@ -1,0 +1,17 @@
+{
+	"name": "sqltabletrunc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "sampletrunc"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
