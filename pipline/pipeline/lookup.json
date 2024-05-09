@@ -71,15 +71,15 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"continer": {
-											"value": "@item().Inputcontainer",
+											"value": "input",
 											"type": "Expression"
 										},
 										"dircctory": {
-											"value": "@item().Inputdirectory",
+											"value": "folder",
 											"type": "Expression"
 										},
 										"filename": {
-											"value": "@item().Inputfile",
+											"value": "Department.csv",
 											"type": "Expression"
 										}
 									}
