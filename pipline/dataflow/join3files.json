@@ -1,5 +1,5 @@
 {
-	"name": "join dataflow",
+	"name": "join3files",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -9,20 +9,27 @@
 						"referenceName": "employeedatasert",
 						"type": "DatasetReference"
 					},
-					"name": "employeefile"
+					"name": "source1"
 				},
 				{
 					"dataset": {
 						"referenceName": "department",
 						"type": "DatasetReference"
 					},
-					"name": "departmentfile"
+					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "sinkjoindataset",
+						"referenceName": "joinsink3",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -31,6 +38,9 @@
 			"transformations": [
 				{
 					"name": "join1"
+				},
+				{
+					"name": "join2"
 				}
 			],
 			"scriptLines": [
@@ -51,26 +61,51 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> employeefile",
+				"     ignoreNoFilesFound: false) ~> source1",
 				"source(output(",
 				"          Department_id as string,",
 				"          Name as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> departmentfile",
-				"employeefile, departmentfile join(employeefile@Department_id == departmentfile@Department_id,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source(output(",
+				"          Employee_id as string,",
+				"          First_Name as string,",
+				"          Last_Name as string,",
+				"          Gender as string,",
+				"          Salary as string,",
+				"          Date_of_Birth as string,",
+				"          Age as string,",
+				"          Country as string,",
+				"          Department_id as string,",
+				"          Date_of_Joining as string,",
+				"          Manager_id as string,",
+				"          Currency as string,",
+				"          End_Date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source3",
+				"source1, source2 join(source1@Department_id == source2@Department_id,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1 sink(allowSchemaDrift: true,",
+				"join1, source3 join(source2@Department_id == source3@Department_id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     partitionFileNames:['outpujoin.csv'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
 	}
