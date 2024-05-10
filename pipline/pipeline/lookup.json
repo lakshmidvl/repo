@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookupmeta').output.value",
+						"value": "@activity('Lookupmeta').output.VALUE",
 						"type": "Expression"
 					},
 					"activities": [
@@ -71,15 +71,15 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"continer": {
-											"value": "input",
+											"value": "@item().Inputcontainer",
 											"type": "Expression"
 										},
 										"dircctory": {
-											"value": "folder",
+											"value": "@item().Inputdirectory",
 											"type": "Expression"
 										},
 										"filename": {
-											"value": "Department.csv",
+											"value": "@item().Inputfile",
 											"type": "Expression"
 										}
 									}
@@ -139,7 +139,7 @@
 						"parameters": {
 							"continer": "input",
 							"dircctory": "folder",
-							"filename": "metadata.csv"
+							"filename": "META.csv"
 						}
 					},
 					"firstRowOnly": false
