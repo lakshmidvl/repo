@@ -1,15 +1,22 @@
 {
-	"name": "foreach_new",
+	"name": "lookupnew",
 	"properties": {
 		"activities": [
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Lookupmetadata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@variables('metadata')",
+						"value": "@activity('Lookupmetadata').output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -100,6 +107,42 @@
 							]
 						}
 					]
+				}
+			},
+			{
+				"name": "Lookupmetadata",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "Dataset_datalake",
+						"type": "DatasetReference",
+						"parameters": {
+							"continer": "input",
+							"dircctory": "folder",
+							"filename": "metadata.csv"
+						}
+					},
+					"firstRowOnly": false
 				}
 			}
 		],
