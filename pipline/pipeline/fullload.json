@@ -123,23 +123,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "Dataset_datalake",
+						"referenceName": "dataset_sql",
 						"type": "DatasetReference",
 						"parameters": {
-							"continer": "input",
-							"dircctory": "folder",
-							"filename": "metadata.csv"
+							"Schema": "dbo",
+							"Tablename": "fullloadmeta"
 						}
 					},
 					"firstRowOnly": false
