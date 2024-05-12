@@ -1,0 +1,139 @@
+{
+	"name": "foreach_new",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('metadata')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "Dataset_datalake",
+									"type": "DatasetReference",
+									"parameters": {
+										"continer": {
+											"value": "@item().Inputcontainer",
+											"type": "Expression"
+										},
+										"dircctory": {
+											"value": "@item().Inputdirectory",
+											"type": "Expression"
+										},
+										"filename": {
+											"value": "@item().Inputfile",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Dataset_datalake",
+									"type": "DatasetReference",
+									"parameters": {
+										"continer": {
+											"value": "@item().Outputcontainer",
+											"type": "Expression"
+										},
+										"dircctory": {
+											"value": "@item().Outputdirectory",
+											"type": "Expression"
+										},
+										"filename": {
+											"value": "@item().Outputfile",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"metadata": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"Inputfile": "Department1.csv",
+						"Inputcontainer": "input",
+						"Inputdirectory": "folder",
+						"Outputfile": "Department1.csv",
+						"Outputcontainer": "folderforeach1",
+						"Outputdirectory": "subfolderforeach"
+					},
+					{
+						"Inputfile": "Department2.csv",
+						"Inputcontainer": "input",
+						"Inputdirectory": "folder",
+						"Outputfile": "Department2.csv",
+						"Outputcontainer": "folderforeach1",
+						"Outputdirectory": "subfolderforeach1"
+					},
+					{
+						"Inputfile": "Employee_data.csv",
+						"Inputcontainer": "input",
+						"Inputdirectory": "folder",
+						"Outputfile": "Employee_data.csv",
+						"Outputcontainer": "folderforeach1",
+						"Outputdirectory": "subfolderforeach2"
+					}
+				]
+			}
+		},
+		"annotations": []
+	}
+}
