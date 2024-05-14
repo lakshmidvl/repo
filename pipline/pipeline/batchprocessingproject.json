@@ -83,6 +83,12 @@
 						"dependencyConditions": [
 							"Succeeded"
 						]
+					},
+					{
+						"activity": "xml",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
 				],
 				"policy": {
@@ -122,6 +128,26 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": "/Users/dvl99780_outlook.com#ext#@dvl99780outlook.onmicrosoft.com/ellipse_education@outlook.com/batchProcess/DashboardPreparation"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "xml",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/dvl99780_outlook.com#ext#@dvl99780outlook.onmicrosoft.com/ellipse_education@outlook.com/batchProcess/XMLprocessing"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks1",
