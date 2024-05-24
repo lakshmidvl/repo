@@ -21,18 +21,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().filename",
-					"type": "Expression"
-				},
-				"folderPath": {
-					"value": "@dataset().dircctory",
-					"type": "Expression"
-				},
-				"fileSystem": {
-					"value": "@dataset().continer",
-					"type": "Expression"
-				}
+				"fileName": "dletasales.csv",
+				"folderPath": "@formatDateTime(utcNow(),'dd_MM_yyyy')",
+				"fileSystem": "deltaload1"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

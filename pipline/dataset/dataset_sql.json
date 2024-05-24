@@ -17,14 +17,8 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": {
-				"value": "@dataset().Schema",
-				"type": "Expression"
-			},
-			"table": {
-				"value": "@dataset().Tablename",
-				"type": "Expression"
-			}
+			"schema": "dbo",
+			"table": "sales"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
