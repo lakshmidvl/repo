@@ -81,12 +81,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from sales where modified_date > '@{activity('Lookup_oldwatermark').output.firstRow.watermark}' and modified_date <= '@{activity('Lookup_newwatermark').output.firstRow.new_watermark}'\n\n",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
@@ -98,26 +92,8 @@
 							"fileExtension": ".txt"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
-				"inputs": [
-					{
-						"referenceName": "dataset_sql",
-						"type": "DatasetReference",
-						"parameters": {
-							"Schema": "dbo",
-							"Tablename": "sales"
-						}
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "DelimitedText6",
@@ -185,7 +161,13 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								""
+							]
+						},
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
