@@ -80,7 +80,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from sales where modified_date > '@{activity('Lookup_oldwatermark').output.firstRow.watermark}' and modified_date <= '@{activity('Lookup_newwatermark').output.firstRow.new_watermark}'\n\n",
+						"sqlReaderQuery": {
+							"value": "select * from sales where modified_date > '@{activity('Lookup_oldwatermark').output.firstRow.watermark}' and modified_date <= '@{activity('Lookup_newwatermark').output.firstRow.new_watermark}'\n\n",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -195,6 +198,7 @@
 							]
 						},
 						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
