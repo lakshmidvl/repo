@@ -1,20 +1,9 @@
 {
-	"name": "Dataset_datalake",
+	"name": "DelimitedText9",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"continer": {
-				"type": "string"
-			},
-			"dircctory": {
-				"type": "string"
-			},
-			"filename": {
-				"type": "string"
-			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
@@ -23,7 +12,7 @@
 				"type": "AzureBlobFSLocation",
 				"fileName": "@item().name",
 				"folderPath": "folder/folder2",
-				"fileSystem": "output"
+				"fileSystem": "input"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
@@ -31,6 +20,5 @@
 			"quoteChar": "\""
 		},
 		"schema": []
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }
