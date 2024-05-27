@@ -84,7 +84,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from sales where modified_date > '@{activity('Lookup_oldwatermark').output.firstRow.watermark}' and modified_date <= '@{activity('Lookup_newwatermark').output.firstRow.newwatermark}'\n",
+							"value": "select * from dbo.sales where modified_date > '@{activity('Lookup_oldwatermark').output.firstRow.watermark}' and modified_date <= '@{activity('Lookup_newwatermark').output.firstRow.newwatermark}'\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
