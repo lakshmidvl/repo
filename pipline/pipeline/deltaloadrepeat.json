@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup_oldwatwermark",
+				"name": "Lookup_oldwatermark",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -27,7 +27,7 @@
 				}
 			},
 			{
-				"name": "Lookup",
+				"name": "Lookup_newwatermark",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -41,7 +41,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select max(modified_date) as new_watermark from dbo.sales",
+						"sqlReaderQuery": "select max(modified_date) as newwatermark from dbo.sales",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -60,13 +60,13 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Lookup_oldwatwermark",
+						"activity": "Lookup_oldwatermark",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					},
 					{
-						"activity": "Lookup",
+						"activity": "Lookup_newwatermark",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -83,7 +83,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from sales where modified_date > '@{activity('Lookup_oldwatermark').output.firstRow.watermark}' and modified_date <= '@{activity('Lookup_newwatermark').output.firstRow.new_watermark}'\n",
+						"sqlReaderQuery": {
+							"value": "select * from sales where modified_date > '@{activity('Lookup_oldwatermark').output.firstRow.watermark}' and modified_date <= '@{activity('Lookup_newwatermark').output.firstRow.newwatermark}'\n",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
