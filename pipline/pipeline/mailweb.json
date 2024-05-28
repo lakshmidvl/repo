@@ -1,0 +1,40 @@
+{
+	"name": "mailweb",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"url": "https://prod-94.eastus.logic.azure.com:443/workflows/b669bbc89cf34a6790129446541851fe/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=FG16NAeKMMho2RLYJX9PqttHMDXBZxoQDVFMbG9YS8U",
+					"body": "{\"DatafactoryName\" : \"@{pipeline().DataFactory}\",\"PipelineName\":\"@{pipeline().parameters.PipelineName}\", \"Subject\" : \"@{pipeline().parameters.Subject}\" , \"Message\": \"@{pipeline().parameters.Message}\"\n\n"
+				}
+			}
+		],
+		"parameters": {
+			"Subject": {
+				"type": "string"
+			},
+			"Message": {
+				"type": "string"
+			},
+			"PipelineName": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
